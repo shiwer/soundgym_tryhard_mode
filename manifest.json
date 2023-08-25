@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "SoundGym Helper",
+  "version": "1.0",
+  "description": "Helps for little improvements on SoundGym.",
+  "permissions": ["activeTab", "tabs", "storage"],
+  "background": {
+    "service_worker": "background_script.js"
+  },
+  "action": {
+  "default_icon": {
+      "16": "icon-green-16.png",
+      "48": "icon-green-48.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.soundgym.co/games/start*"],
+      "js": ["shared.js", "tryhard.js"]
+    },
+    {
+      "matches": ["https://www.soundgym.co/games/complete*"],
+      "js": ["shared.js", "score_handler.js"]
+    }
+  ]
+}
+
