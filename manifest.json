@@ -9,8 +9,7 @@
   },
   "action": {
   "default_icon": {
-      "16": "icon-green-16.png",
-      "48": "icon-green-48.png"
+      "48": "icon-green.png"
     }
   },
   "content_scripts": [

@@ -3,7 +3,7 @@ let isExtensionActive;
 function updateIcon() {
   // set the green icon when application is active otherwise set the black one
   const iconPath = isExtensionActive ? "icon-green" : "icon-black";
-  chrome.action.setIcon({ path: { 16: iconPath + "-16.png", 48: iconPath + "-48.png"} });
+  chrome.action.setIcon({ path: { 48: iconPath + ".png"} });
 }
 
 // Function to update the extension state and save it to chrome.storage
