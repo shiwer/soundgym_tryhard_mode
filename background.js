@@ -1,6 +1,5 @@
 let isExtensionActive;
 
-
 function updateIcon() {
   const iconPath = isExtensionActive ? "icon-green" : "icon-black";
   chrome.action.setIcon({ path: { 16: iconPath + "-16.png", 48: iconPath + "-48.png"} });
@@ -42,7 +41,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     (async () => {
       const data = await chrome.storage.local.get(["isExtensionActive"]);
       isExtensionActive = data.isExtensionActive !== undefined ? data.isExtensionActive : false;
-      console.log("isExtensionActive: ", isExtensionActive);
       sendResponse({ isExtensionActive: isExtensionActive });
     })();
     // Return true to indicate that we will send a response asynchronously

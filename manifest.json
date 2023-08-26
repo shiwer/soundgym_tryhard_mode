@@ -5,7 +5,7 @@
   "description": "Helps for little improvements on SoundGym.",
   "permissions": ["activeTab", "tabs", "storage"],
   "background": {
-    "service_worker": "background_script.js"
+    "service_worker": "background.js"
   },
   "action": {
   "default_icon": {
