@@ -1,0 +1,15 @@
+/* styles.css */
+#high-score {
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.5s;
+    background-color: #FF6B6B; /* Red color initially */
+    color: white;
+    margin-top: 10px;
+}
+
+#high-score.new {
+    background-color: #00BFA5; /* Green color for new high score */
+}

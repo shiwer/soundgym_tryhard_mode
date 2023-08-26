@@ -16,7 +16,8 @@
   "content_scripts": [
     {
       "matches": ["https://www.soundgym.co/games/start*"],
-      "js": ["shared.js", "tryhard.js"]
+      "js": ["shared.js", "tryhard.js"],
+      "css": ["style.css"]
     },
     {
       "matches": ["https://www.soundgym.co/games/complete*"],

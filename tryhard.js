@@ -1,7 +1,3 @@
-// content script
-
-// ... Your existing code ...
-
 // Get the gameId and high score for the current game
 const gameId = window.SharedModule.getGameId();
 const highScore = window.SharedModule.getHighScore(gameId);
@@ -21,15 +17,6 @@ function createHighScoreDiv() {
   highScoreDiv = document.createElement('div');
   highScoreDiv.id = 'high-score';
   highScoreDiv.textContent = `Current High Score: ${formatScoreWithCommas(highScore)}`;
-  highScoreDiv.style.padding = '10px';
-  highScoreDiv.style.borderRadius = '8px';
-  highScoreDiv.style.fontWeight = 'bold';
-  highScoreDiv.style.display = 'inline-block';
-  highScoreDiv.style.transition = 'background-color 0.5s';
-  highScoreDiv.style.backgroundColor = '#FF6B6B'; 
-// Red color initially
-  highScoreDiv.style.color = 'white';
-  highScoreDiv.style.marginTop = '10px';
 
   // Find the game panel div and insert the high score div after it
   const gamePanelDiv = document.getElementById('game-panel');
@@ -50,7 +37,7 @@ function observeSpanPoints() {
           // Update the displayed high score
           highScoreDiv.textContent = `New High Score: ${formatScoreWithCommas(currentValue)}`;
           // Change the background color to green (with a smooth transition)
-          highScoreDiv.style.backgroundColor = '#00BFA5';
+         highScoreDiv.classList.add('new'); // Add the 'new' class when a new high score is achieved
         }
       }
     }
