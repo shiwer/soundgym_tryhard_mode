@@ -1,6 +1,7 @@
 let isExtensionActive;
 
 function updateIcon() {
+  // set the green icon when application is active otherwise set the black one
   const iconPath = isExtensionActive ? "icon-green" : "icon-black";
   chrome.action.setIcon({ path: { 16: iconPath + "-16.png", 48: iconPath + "-48.png"} });
 }
@@ -14,7 +15,6 @@ function updateExtensionState(newState) {
 
 function toggleExtensionState() {
   updateExtensionState(!isExtensionActive);
-  console.log("Extension state updated. Active:", isExtensionActive);
   // Send message to the content script to inform about the extension state
   chrome.tabs.query({}, (tabs) => {
     for (const tab of tabs) {

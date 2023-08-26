@@ -15,7 +15,9 @@ function formatScoreWithCommas(score) {
 function createHighScoreDiv() {
   // Create a styled div for displaying the current high score
   highScoreDiv = document.createElement('div');
+  // Give it a id value
   highScoreDiv.id = 'high-score';
+  // set the text of the div with the formatted value
   highScoreDiv.textContent = `Current High Score: ${formatScoreWithCommas(highScore)}`;
 
   // Find the game panel div and insert the high score div after it
@@ -26,13 +28,17 @@ function createHighScoreDiv() {
 }
 
 function observeSpanPoints() {
+  // The pointsSpan Element contains the current value of the user score.
   const pointsSpan = document.getElementById('points');
   if (pointsSpan) {
+    // look for any mutation (evolution) of the score.
     const observerPoints = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === 'childList') {
+         // If the value changes, compare it to the high score
          const scoreText = pointsSpan.textContent.trim();
          currentValue = parseFloat(scoreText.replaceAll(",", ""));
+         // If there is a new high score
          if(currentValue > highScore) {
           // Update the displayed high score
           highScoreDiv.textContent = `New High Score: ${formatScoreWithCommas(currentValue)}`;
@@ -52,19 +58,14 @@ function observeSpanPoints() {
 // Function to handle the extension state change
 function handleExtensionStateChange(state) {
   isExtensionActive = state;
-  console.log("Content Script: Extension state changed. Active:", isExtensionActive);
   if (isExtensionActive) {
     // Set up the observer when the extension is active
-    console.log("Content Script: Observer set up.");
-
     createHighScoreDiv();
     startAudioPlayback();
     observeSpanPoints();
     handleGameOver();
-
   } else {
     // Disconnect the observer when the extension is inactive
-    console.log("Content Script: Observer disconnected.", observerGameOver);
     if (observerGameOver) {
       observerGameOver.disconnect();
       observerGameOver = null;
@@ -78,27 +79,28 @@ function startAudioPlayback() {
   if (gameReadyDiv) {
     if (gameReadyDiv.classList.contains("active")) {
       // Start audio playback only if the button click is within a user gesture
-      console.log("Content Script: 'active' class added to 'game-ready' div. Starting audio playback...");
       const buttonToClick = gameReadyDiv.querySelector("div.game-panel-cover-btn");
       buttonToClick.click();
     }
   }
 }
 
+// Function to handle the behavior on game over overlay
 function handleGameOver() {
   const gameOverDiv = document.getElementById("game-over");
   if (gameOverDiv) {
     // we reload only if it's not a new high score.
+    // we noticed the gameOverDiv has active class when the game ends.
     if (gameOverDiv.classList.contains("active") && !(currentValue > highScore)) {
       reloadAndPlayAgain();
     } 
     else {
+      // Observe changes on the gameOverDiv to see when the active class is given
       observerGameOver = new MutationObserver((mutationsList) => {
         for (const mutation of mutationsList) {
           if (mutation.type === "attributes" && mutation.attributeName === "class") {
+            // If the game ended and we have not beaten our high score refresh the page
             if (gameOverDiv.classList.contains("active") && !(currentValue > highScore)) {
-                // Refresh the page when "active" class is added to "game-over" div
-              console.log("Content Script: 'active' class added to 'game-over' div. Refreshing page...");
               reloadAndPlayAgain();
             }
           }
@@ -115,13 +117,13 @@ function reloadAndPlayAgain() {
 
 // Function to request the extension state from the background script using Promises
 function getExtensionStateFromBackground() {
+  // Await for an async response.
   return new Promise((resolve, reject) => {
     chrome.runtime.sendMessage({ action: "getExtensionState" }, (response) => {
       if (chrome.runtime.lastError) {
         console.error("error : ", chrome.runtime.lastError);
         reject(chrome.runtime.lastError);
       } else {
-        console.log("resolving : ", response);
         resolve(response.isExtensionActive);
       }
     });
@@ -131,7 +133,6 @@ function getExtensionStateFromBackground() {
 // Message listener to receive the extension state from the background script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "extensionStateChanged") {
-    console.log("value has changed. New extension value:", message.isActive);
     handleExtensionStateChange(message.isActive);
   }
 });
@@ -140,7 +141,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 async function initializeExtensionState() {
   try {
     const state = await getExtensionStateFromBackground();
-    console.log("Getting extension state: ", state);
     handleExtensionStateChange(state);
   } catch (error) {
     console.error("Error getting extension state:", error);

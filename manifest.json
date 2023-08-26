@@ -3,7 +3,7 @@
   "name": "SoundGym Helper",
   "version": "1.0",
   "description": "Helps for little improvements on SoundGym.",
-  "permissions": ["activeTab", "tabs", "storage"],
+  "permissions": ["tabs", "storage"],
   "background": {
     "service_worker": "background.js"
   },
