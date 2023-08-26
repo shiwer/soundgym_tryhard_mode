@@ -8,9 +8,10 @@ As a user, I wanted to keep track on my high score and force myself beating it o
 ## Why Use This Extension
 
 Browser extensions are powerful additions that can enhance your web browsing experience. They are lightweight plugins that can add new functionalities to websites. 
-This simple extension will create a div to show on your game page your high score. If you haven't beaten your high score then when you get to the game over overlay the page is refreshed and you have to start back practising.
+This simple extension will create a div to show on your game page your high score. 
+If you haven't beaten your high score then when you get to the game over overlay the page is refreshed and you have to start back practising.
 
-
+![Alt text](Capture%20d%E2%80%99e%CC%81cran%202023-08-26%20a%CC%80%2022.21.44.png)
 
 ## Getting Started
 
